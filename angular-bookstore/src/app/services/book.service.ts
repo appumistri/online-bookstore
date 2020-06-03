@@ -13,8 +13,9 @@ export class BookService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getBooks(): Observable<Book[]> {
-    return this.httpClient.get<GetBookResponse>(this.baseUrl).pipe(
+  getBooks(categoryId: number): Observable<Book[]> {
+    const searchUrl = `${this.baseUrl}/search/categoryid?id=${categoryId}`;
+    return this.httpClient.get<GetBookResponse>(searchUrl).pipe(
       map(response => response._embedded.books)
     );
   }
