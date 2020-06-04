@@ -22,6 +22,16 @@ export class BookListComponent implements OnInit {
   }
 
   listBooks() {
+    const isSearch = this.activatedRoute.snapshot.paramMap.has('keyword')
+
+    if (!isSearch) {
+      this.handleBookList();
+    } else {
+      this.handleBookSearch();
+    }
+  }
+
+  handleBookList() {
     const hasCategoryId = this.activatedRoute.snapshot.paramMap.has('id')
 
     if (hasCategoryId) {
@@ -31,6 +41,14 @@ export class BookListComponent implements OnInit {
     }
 
     this.bookService.getBooks(this.categoryId).subscribe(
+      data => this.books = data
+    )
+  }
+
+  handleBookSearch() {
+    const keyword = this.activatedRoute.snapshot.paramMap.get('keyword');
+
+    this.bookService.searchBooks(keyword).subscribe(
       data => this.books = data
     )
   }

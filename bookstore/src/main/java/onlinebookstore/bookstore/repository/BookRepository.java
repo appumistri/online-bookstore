@@ -10,6 +10,9 @@ import onlinebookstore.bookstore.entity.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-	@RestResource(path="categoryid")
+	@RestResource(path = "categoryid")
 	Page<Book> findByCategoryId(@Param("id") Long id, Pageable pagable);
+
+	@RestResource(path = "searchByKeyword")
+	Page<Book> findByNameContaining(@Param("name") String name, Pageable pagable);
 }

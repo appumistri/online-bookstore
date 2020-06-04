@@ -27,6 +27,18 @@ export class BookService {
       map(response => response._embedded.bookCategory)
     )
   }
+
+  searchBooks(keyword: string): Observable<Book[]> {
+    const searchUrl = `${this.booksUrl}/search/searchByKeyword?name=${keyword}`;
+    return this.httpClient.get<GetBookResponse>(searchUrl).pipe(
+      map(response => response._embedded.books)
+    )
+  }
+
+  getBookDetails(id: number) {
+    const bookDetsildUrl = `${this.booksUrl}/${id}`;
+    return this.httpClient.get<Book>(bookDetsildUrl);
+  }
 }
 
 interface GetBookResponse {
