@@ -30,11 +30,11 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="books?.length==0 " class="col-md-12 alert alert-warning text-center ">
+                <div *ngIf="books?.length==0" class="col-md-12 alert alert-warning text-center ">
                     No books found!
                 </div>
             </div>
-            <div class="row">
+            <div *ngIf="books?.length!=0" class="row">
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-3">

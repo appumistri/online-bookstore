@@ -44,18 +44,20 @@ export class BookListComponent implements OnInit {
 
     if (hasCategoryId) {
       this.categoryId = +this.activatedRoute.snapshot.paramMap.get('id');
+
+      if (this.oldCategoryId != this.categoryId) {
+        this.currentPage = 1;
+      }
+
+      this.bookService.getBooksByCategory(this.categoryId, this.currentPage - 1, this.pageSize).subscribe(
+        data => this.handlePagination(data)
+      )
+      this.oldCategoryId = this.categoryId;
     } else {
-      this.categoryId = 1;
+      this.bookService.getBooks(this.currentPage - 1, this.pageSize).subscribe(
+        data => this.handlePagination(data)
+      )
     }
-
-    if (this.oldCategoryId != this.categoryId) {
-      this.currentPage = 1;
-    }
-
-    this.bookService.getBooks(this.categoryId, this.currentPage - 1, this.pageSize).subscribe(
-      data => this.handlePagination(data)
-    )
-    this.oldCategoryId = this.categoryId;
   }
 
   handleBookSearch() {
