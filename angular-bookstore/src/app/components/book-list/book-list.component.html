@@ -9,11 +9,15 @@
 
         </div>
         <!-- /.col-lg-3 -->
-        <div class="col">
+        <div class="col-lg-9">
             <div class="row">
                 <div *ngFor="let book of books" class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                        <a routerLink="/books/{{book.id}}"><img class="card-img-top img-responsive" [src]="book.imageUrl" height="250px"></a>
+                        <a routerLink="/books/{{book.id}}">
+                            <div class="inner">
+                                <img class="card-img-top img-responsive" [src]="book.imageUrl" height="250px">
+                            </div>
+                        </a>
                         <div class="card-body">
                             <h4 class="card-title">
                                 <a routerLink="/books/{{book.id}}">{{book.name}}</a>
@@ -30,12 +34,34 @@
                     No books found!
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Page Size:</label>
+                        </div>
+                        <div class="col-md-3 ml-2">
+                            <select class="browser-default custom-select" (change)="updatePageSize($event.target.value)">
+                                <option class="dropdown-item" selected>5</option>
+                                <option class="dropdown-item">10</option>
+                                <option class="dropdown-item">20</option>
+                                <option class="dropdown-item">50</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <ngb-pagination class="d-flex justify-content-end" [(page)]="currentPage" [pageSize]="pageSize" [collectionSize]="totalBooks" [maxSize]="3" [boundaryLinks]="true" (pageChange)="listBooks()">
+                        <ng-template ngbPaginationPrevious>Prev</ng-template>
+                        <ng-template ngbPaginationNext>Next</ng-template>
+                        <ng-template ngbPaginationFirst>First</ng-template>
+                        <ng-template ngbPaginationLast>Last</ng-template>
+                    </ngb-pagination>
+                </div>
+            </div>
         </div>
-
         <!-- /.col-lg-9 -->
-
     </div>
     <!-- /.row -->
-
 </div>
 <!-- /.container -->

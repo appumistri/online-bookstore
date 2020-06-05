@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Book } from 'src/app/common/book';
-import { BookService } from 'src/app/services/book.service';
+import { BookService, GetBookResponse } from 'src/app/services/book.service';
 
 @Component({
   selector: 'app-book-list',
@@ -10,8 +10,16 @@ import { BookService } from 'src/app/services/book.service';
 })
 export class BookListComponent implements OnInit {
 
-  public books: Book[];
-  private categoryId: number;
+  books: Book[] = [];
+  categoryId: number = 1;
+  keyword: string = "";
+  pageSize: number = 5;
+  currentPage: number = 1;
+  totalPages: number = 0;
+  totalBooks: number = 0;
+
+  oldCategoryId: number = 1;
+  oldKeyword: string = "";
 
   constructor(private bookService: BookService, private activatedRoute: ActivatedRoute) { }
 
@@ -40,16 +48,39 @@ export class BookListComponent implements OnInit {
       this.categoryId = 1;
     }
 
-    this.bookService.getBooks(this.categoryId).subscribe(
-      data => this.books = data
+    if (this.oldCategoryId != this.categoryId) {
+      this.currentPage = 1;
+    }
+
+    this.bookService.getBooks(this.categoryId, this.currentPage - 1, this.pageSize).subscribe(
+      data => this.handlePagination(data)
     )
+    this.oldCategoryId = this.categoryId;
   }
 
   handleBookSearch() {
-    const keyword = this.activatedRoute.snapshot.paramMap.get('keyword');
+    this.keyword = this.activatedRoute.snapshot.paramMap.get('keyword');
 
-    this.bookService.searchBooks(keyword).subscribe(
-      data => this.books = data
+    if (this.oldKeyword != this.keyword) {
+      this.currentPage = 1;
+    }
+
+    this.bookService.searchBooks(this.keyword, this.currentPage - 1, this.pageSize).subscribe(
+      data => this.handlePagination(data)
     )
+    this.oldKeyword = this.keyword;
+  }
+
+  updatePageSize(pageSize: number) {
+    this.pageSize = +pageSize;
+    this.listBooks();
+  }
+
+  handlePagination(data: GetBookResponse) {
+    this.books = data._embedded.books;
+    this.pageSize = data.page.size;
+    this.totalBooks = data.page.totalElements;
+    this.totalPages = data.page.totalPages;
+    this.currentPage = data.page.number + 1;
   }
 }
