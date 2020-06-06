@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Book } from 'src/app/common/book';
-import { BookService, GetBookResponse } from 'src/app/services/book.service';
 import { CartItem } from 'src/app/common/cart-item';
+import { BookService, GetBookResponse } from 'src/app/services/book.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class BookListComponent implements OnInit {
   oldCategoryId: number = 1;
   oldKeyword: string = "";
 
-  constructor(private bookService: BookService, private cartService: CartService, private activatedRoute: ActivatedRoute) { }
+  constructor(private bookService: BookService, private cartService: CartService,
+    private activatedRoute: ActivatedRoute, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(() => {
@@ -32,6 +34,7 @@ export class BookListComponent implements OnInit {
   }
 
   listBooks() {
+    this.spinner.show();
     const isSearch = this.activatedRoute.snapshot.paramMap.has('keyword')
 
     if (!isSearch) {
@@ -86,6 +89,7 @@ export class BookListComponent implements OnInit {
     this.totalBooks = data.page.totalElements;
     this.totalPages = data.page.totalPages;
     this.currentPage = data.page.number + 1;
+    this.spinner.hide();
   }
 
   addToCart(book: Book) {
