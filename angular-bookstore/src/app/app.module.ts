@@ -10,6 +10,7 @@ import { BookListComponent } from './components/book-list/book-list.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { SearchBooksComponent } from './components/search-books/search-books.component';
 import { BookService } from './services/book.service';
+import { CartStatusComponent } from './components/cart-status/cart-status.component';
 
 const routes: Routes = [
     { path: 'books', component: BookListComponent },
@@ -27,7 +28,8 @@ const routes: Routes = [
         PageNotFoundComponent,
         BookCategoryComponent,
         SearchBooksComponent,
-        BookDetailsComponent
+        BookDetailsComponent,
+        CartStatusComponent
     ],
     imports: [
         BrowserModule,

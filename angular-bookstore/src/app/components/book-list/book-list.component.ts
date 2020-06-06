@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Book } from 'src/app/common/book';
 import { BookService, GetBookResponse } from 'src/app/services/book.service';
+import { CartItem } from 'src/app/common/cart-item';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-book-list',
@@ -21,7 +23,7 @@ export class BookListComponent implements OnInit {
   oldCategoryId: number = 1;
   oldKeyword: string = "";
 
-  constructor(private bookService: BookService, private activatedRoute: ActivatedRoute) { }
+  constructor(private bookService: BookService, private cartService: CartService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(() => {
@@ -84,5 +86,10 @@ export class BookListComponent implements OnInit {
     this.totalBooks = data.page.totalElements;
     this.totalPages = data.page.totalPages;
     this.currentPage = data.page.number + 1;
+  }
+
+  addToCart(book: Book) {
+    let item = new CartItem(book);
+    this.cartService.addToCart(item);
   }
 }
