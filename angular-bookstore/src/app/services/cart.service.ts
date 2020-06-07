@@ -31,6 +31,16 @@ export class CartService {
     this.calculateTotalPrice();
   }
 
+  removeFromCart(itemToRemove: CartItem) {
+    this.cartItems = this.cartItems.filter(cartItem => cartItem.id != itemToRemove.id);
+    this.calculateTotalPrice();
+  }
+
+  updateCart(cartItems: CartItem[]) {
+    this.cartItems = cartItems.filter(cartItem => cartItem.quantity > 0);
+    this.calculateTotalPrice();
+  }
+
   calculateTotalPrice() {
     let totalPrice = 0;
     let totalQuantity = 0;
