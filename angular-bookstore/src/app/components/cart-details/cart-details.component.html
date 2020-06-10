@@ -15,12 +15,12 @@
                     <tr *ngFor="let cartItem of cartItems">
                         <td class="col-sm-8 col-md-6">
                             <div class="media">
-                                <a class="thumbnail pull-left" [routerLink]="'/books/'+cartItem.id">
+                                <a class="thumbnail pull-left" [routerLink]="'/books/' + cartItem.id">
                                     <img class="media-object" [src]="cartItem.imageUrl" width="70px" height="70px">
                                 </a>
                                 <div class="media-body">
                                     <h5 class="media-heading ml-2">
-                                        <a [routerLink]="'/books/'+cartItem.id">{{cartItem.name}}</a>
+                                        <a [routerLink]="'/books/' + cartItem.id">{{cartItem.name}}</a>
                                     </h5>
                                     <!-- <h5 class="media-heading"> by <a href="#">Brand name</a></h5> -->
                                     <!-- <span>Status: </span><span class="text-success"><strong>In Stock</strong></span> -->
