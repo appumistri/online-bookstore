@@ -24,11 +24,11 @@ public class BookCategory {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	public long id;
 
 	@Column(name = "category_name")
-	private String categoryName;
+	public String categoryName;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-	private Set<Book> book;
+	public Set<Book> book;
 }

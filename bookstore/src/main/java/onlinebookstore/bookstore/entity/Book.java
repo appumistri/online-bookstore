@@ -25,32 +25,32 @@ public class Book {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	public long id;
 
-	private String sku;
+	public String sku;
 
-	private String name;
+	public String name;
 
-	private String description;
+	public String description;
 
 	@Column(name = "unit_price")
-	private BigDecimal unitPrice;
+	public BigDecimal unitPrice;
 
 	@Column(name = "image_url")
-	private String imageUrl;
+	public String imageUrl;
 
-	private boolean active;
+	public boolean active;
 
 	@Column(name = "units_in_stock")
-	private int unitsInStock;
+	public int unitsInStock;
 
 	@Column(name = "date_created")
-	private Date createdOn;
+	public Date createdOn;
 
 	@Column(name = "last_updated")
-	private Date updatedOn;
+	public Date updatedOn;
 
 	@ManyToOne
 	@JoinColumn(name = "category_id", nullable = false)
-	private BookCategory category;
+	public BookCategory category;
 }
